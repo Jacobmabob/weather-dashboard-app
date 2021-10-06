@@ -18,7 +18,7 @@ var icon = $(".icon")
 
 
 var cityArray = []
-var storedCityArray = JSON.parse(localStorage.getItem('city names'));
+// var storedCityArray = JSON.parse(localStorage.getItem('city names'));
 
 
 var apiKey = "4c0ee78030e85f87dd27ff63df4ab854"
@@ -39,6 +39,8 @@ function getApi(source) {
             var lat = data.coord.lat;
             var lon = data.coord.lon;
             var cityName = data.name 
+            var storedCityArray = JSON.parse(localStorage.getItem('city names'));
+
 
             if (cityName !== "Atlanta" && $.inArray(cityName, storedCityArray) === -1){
                 storedCityArray.push(cityName);
@@ -75,14 +77,12 @@ function getApi(source) {
 
                     for (var i = 0; i < dateElArray.length; i++){
                         dateElArray.eq(i).text(moment(data.daily[i].dt, "X").format('L'));
-
                         var weatherIconUrl = "https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png"
-                        icon.attr('src', weatherIconUrl)
-
-                        }
+                        icon.eq(i).attr('src', weatherIconUrl)
+                    }
 
                         
-                        for (var i = 0; i < forecastTempArray.length; i ++) {
+                    for (var i = 0; i < forecastTempArray.length; i ++) {
                         forecastTempArray.eq(i).text(data.daily[i+1].temp.day + "°F");
                         forecastHumidityArray.eq(i).text(data.daily[i+1].humidity + "%");
                         forecastWindArray.eq(i).text(data.daily[i+1].wind_speed + " mph");
@@ -90,23 +90,24 @@ function getApi(source) {
                         
                     }
 
-                    })
+                })
         })
         
 }
 
 function Init() {
-    getApi("Atlanta")
     var storedCityArray = JSON.parse(localStorage.getItem('city names'));
     if (storedCityArray === null) {
         cityArray.push("Atlanta");
         localStorage.setItem('city names', JSON.stringify(cityArray));
-    }  
-        for (var i = 1 ; i < storedCityArray.length; i++) {
+    }; 
+    getApi("Atlanta")
+    var storedCityArray = JSON.parse(localStorage.getItem('city names'));
+    for (var i = 0 ; i < storedCityArray.length; i++) {
             var existingCityButton =  $("<button></button>").text(storedCityArray[i])
             existingCityButton.addClass("list-group-item list-group-item-action")
             cityListEl.append(existingCityButton);
-        }
+    }
 }
 
 
@@ -115,7 +116,6 @@ Init ();
 searchButton.click( function() {
     var searchResult = searchInputField.val();
     getApi(searchResult);
-    console.log(storedCityArray)
 
 })
 
