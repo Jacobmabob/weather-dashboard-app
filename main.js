@@ -28,7 +28,7 @@ var apiKey = "4c0ee78030e85f87dd27ff63df4ab854"
 function getApi(source) {
 
     var apiKey = "4c0ee78030e85f87dd27ff63df4ab854"
-    var apiCityUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + source + "&appid=" + apiKey
+    var apiCityUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + source + "&appid=" + apiKey
     console.log(apiCityUrl);
 
     fetch (apiCityUrl)
