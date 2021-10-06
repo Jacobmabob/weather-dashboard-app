@@ -18,7 +18,6 @@ var icon = $(".icon")
 
 
 var cityArray = []
-// var storedCityArray = JSON.parse(localStorage.getItem('city names'));
 
 
 var apiKey = "4c0ee78030e85f87dd27ff63df4ab854"
